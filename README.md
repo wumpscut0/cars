@@ -39,13 +39,19 @@ git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wu
 2. Убедитесь что порт 8000 свободен
 3. Выполните команду
    - вариант poetry:
-    ```bash
-    git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wumpscut0 && python poetry install -E other && poetry shell && python manage.py makemigrations && python manage.py migrate && python manage.py runserver
-    ```
+   ```bash
+   git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wumpscut0 && poetry install && poetry shell
+   ```
+   ```bash
+   python manage.py makemigrations && python manage.py migrate && python manage.py runserver
+   ```    
    - вариант pip:
-    ```bash
-    git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wumpscut0 && python python -m venv .venv_CfRhiWwupo && soruce .venv_CfRhiWwupo/bin/activate && pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py runserver
-    ```
+   ```bash
+   git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wumpscut0 && python -m venv .venv_CfRhiWwupo && source .venv_CfRhiWwupo/bin/activate
+   ```
+   ```bash
+   pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py runserver
+   ```
 ## Доступ к приложению
 ### Главная страница: http://127.0.0.1:8000
 ### Документация API: http://127.0.0.1:8000/api/docs
