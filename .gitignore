@@ -1,0 +1,4 @@
+*.xml
+db.sqlite3
+*.iml
+__pycache__

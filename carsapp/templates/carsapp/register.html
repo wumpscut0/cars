@@ -1,0 +1,35 @@
+{% extends "carsapp/base.html" %}
+
+{% block title %}
+	Регистрация
+{% endblock %}
+
+
+{% block body %}
+	<section class="container">
+		<div>
+			<form method="post" action="{% url 'carsapp:register' %}">
+				{% csrf_token %}
+				<div class="md-3">
+					<label class="form-label" for="id_username">Ник:</label>
+				    <input class="form-control" type="text" name="username" maxlength="150" autofocus="" required="" aria-describedby="usernameHelpBlock" id="id_username">
+	                <div id="usernameHelpBlock" class="form-text">
+						*Обязательное поле, длина имени не должна превышать 150 символов
+					</div>
+				</div>
+			    <div class="md-3">
+				    <label class="form-label" for="id_password1">Пароль:</label>
+				    <input class="form-control" type="password" name="password1" autocomplete="new-password" id="id_password1">
+			    </div>
+				<div class="md-3">
+				    <label class="form-label" for="id_password2">Подтверждение пароля:</label>
+				    <input class="form-control" type="password" name="password2" autocomplete="new-password" aria-describedby="passwordHelpBLock" id="id_password2">
+					<div id="passwordHelpBLock" class="form-text">
+						*Длина пароля должна быть более 8 символов
+					</div>
+			    </div>
+				<button class="btn btn-primary" type="submit">Создать аккаунт</button>
+			</form>
+		</div>
+	</section>
+{% endblock %}

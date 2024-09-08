@@ -1,0 +1,38 @@
+{% extends "carsapp/base.html" %}
+
+{% block title %}
+	Обновление
+{% endblock %}
+
+{% block js %}
+	{% load static %}
+	<script src="{% static 'js/cars.js' %}"></script>
+	<script src="{% static 'js/autocompletion.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+	<section class="container">
+		<div>
+			<form method="post" action="{% url 'carsapp:car_update' pk=car.pk %}?total_comments={{ current_total_comments }}">
+				{% csrf_token %}
+				<p>
+				    <label class="form-label" for="id_make">Make:</label>
+				    <input class="form-control" type="text" name="make" value="{{ car.make }}" maxlength="100" required="" id="id_make" list="makes" autocomplete="off"><datalist id="makes"><option value="Seat"></option><option value="Renault"></option><option value="Peugeot"></option><option value="Dacia"></option><option value="Citroen"></option><option value="Opel"></option><option value="Alfa Romeo"></option><option value="Skoda"></option><option value="Chevrolet"></option><option value="Porsche"></option><option value="Honda"></option><option value="Subaru"></option><option value="Mazda"></option><option value="Mitsubishi"></option><option value="Lexus"></option><option value="Toyota"></option><option value="BMW"></option><option value="Volkswagen"></option><option value="Suzuki"></option><option value="Mercedes-Benz"></option><option value="Saab"></option><option value="Audi"></option><option value="Kia"></option><option value="Land Rover"></option><option value="Dodge"></option><option value="Chrysler"></option><option value="Ford"></option><option value="Hummer"></option><option value="Hyundai"></option><option value="Infiniti"></option><option value="Jaguar"></option><option value="Jeep"></option><option value="Nissan"></option><option value="Volvo"></option><option value="Daewoo"></option><option value="Fiat"></option><option value="MINI"></option><option value="Rover"></option><option value="Smart"></option></datalist>
+				</p>
+				<p>
+				    <label class="form-label" for="id_model">Model:</label>
+				    <input class="form-control" type="text" name="model" value="{{ car.model }}" maxlength="100" required="" id="id_model" list="models" autocomplete="off"><datalist id="models"></datalist>
+				</p>
+				<p>
+				    <label class="form-label" for="id_year">Year:</label>
+				    <input class="form-control" type="number" name="year" value="{{ car.year }}" required="" id="id_year">
+				</p>
+				<p>
+					<label class="form-label" for="id_description">Description:</label>
+					<textarea class="form-control" name="description" cols="40" rows="10" maxlength="1023" id="id_description">{{ car.description|linebreaksbr }}</textarea>
+				</p>
+				<button class="btn btn-primary" type="submit">Сохранить</button>
+			</form>
+		</div>
+	</section>
+{% endblock %}

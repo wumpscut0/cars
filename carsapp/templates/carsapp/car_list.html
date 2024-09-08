@@ -1,0 +1,28 @@
+{% extends "carsapp/base.html" %}
+
+{% block body %}
+	<section class="container">
+		<div class="container-sm">
+			{% if not object_list %}
+				Пока нет ни одного объявления 😿
+			{% else %}
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Car</th>
+							<th>Owner</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for car in object_list %}
+							<tr>
+								<td><a href="{% url 'carsapp:car_detail' pk=car.pk %}">{{ car.make }} [{{ car.model }}] {{ car.year }}</a></td>
+								<td>{% firstof car.owner.username car.owner.firstname "No name" %}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+	</section>
+{% endblock %}

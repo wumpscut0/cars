@@ -1,0 +1,18 @@
+{% extends "carsapp/base.html" %}
+
+{% block title %}
+	Удаление
+{% endblock %}
+
+{% block body %}
+	<section class="container">
+		<p>Удалить объявление и всю связанную с ним информацию без возможности восстановления?</p>
+		<form method="post" action="{% url 'carsapp:car_delete' pk=car.pk %}">
+			{% csrf_token %}
+			<div class="btn-group">
+				<button class="btn btn-danger" type="submit">Удалить</button>
+				<a class="btn btn-secondary" href="{% url 'carsapp:car_detail' pk=car.pk %}?total_comments={{ current_total_comments }}">Нет</a>
+			</div>
+		</form>
+	</section>
+{% endblock %}

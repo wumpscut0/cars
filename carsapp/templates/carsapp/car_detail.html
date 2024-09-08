@@ -1,0 +1,93 @@
+{% extends "carsapp/base.html" %}
+
+{% block title %}
+	Детали {{ car.model|truncatechars:10 }}
+{% endblock %}
+
+
+{% block body %}
+	<section class="container">
+		<div class="card" style="width: 18rem;">
+			<div class="card-header">
+				<strong class="card-title">{{ car.make }}</strong>
+			</div>
+			<div class="card-body">
+				<p class="card-text">
+					Марка: {{ car.make }}<br>
+					Модель: {{ car.model }}<br>
+					Год выпуска: {{ car.year }}<br>
+					Описание: {{ car.description|linebreaksbr }}<br>
+					Владелец: {% firstof car.owner.username car.owner.firstname "No name" %}<br>
+					Создано: {{ car.created_at|date:"d.m.Y H:i:s" }}<br>
+					Обновлено: {{ car.updated_at|date:"d.m.Y H:i:s" }}
+				</p>
+				{% if user.is_authenticated and car.owner.pk == user.pk %}
+					<a class="btn btn-primary" href="{% url 'carsapp:car_update' pk=car.pk %}?total_comments={{ current_total_comments }}">Обновить</a>
+					<a class="btn btn-danger" href="{% url 'carsapp:car_delete' pk=car.pk %}?total_comments={{ current_total_comments }}">Удалить</a>
+				{% endif %}
+			</div>
+		</div>
+		<hr>
+		<strong class="card-title">Комментарии:</strong>
+		{% if not car.comments.all %}
+			Пока комментариев нет
+		{% else %}
+			{% for comment in page_obj %}
+				<div class="card">
+					<div class="card-header">
+						<p>Время: {{ comment.created_at|date:"d.m.Y H:i:s" }}</p>
+						<p>От: {% firstof comment.author.username comment.author.firstname "No name" %}</p>
+					</div>
+					<div class="card-body">
+						<p>{{ comment.content|linebreaksbr }}</p>
+					</div>
+				</div>
+				<hr>
+			{% endfor %}
+		{% endif %}
+		{% if user.is_authenticated %}
+			{% if error %}
+				<p>{{ error }}</p>
+			{% endif %}
+			<form method="post" action="{% url 'carsapp:car_detail' pk=car.pk %}?total_comments={{ current_total_comments }}">
+				{% csrf_token %}
+				<textarea id="comment-input" name="content" maxlength="255" placeholder="Введите комментарий" style="resize: vertical; overflow-y: auto; width: 300px; box-sizing: border-box;"></textarea>
+				<button class="btn btn-primary" id="send-comment" type="submit" disabled >Добавить комментарий</button>
+			</form>
+		{% else %}
+			<p>Чтобы комментировать, <a href="{% url 'carsapp:login' %}">войдите в систему</a></p>
+		{% endif %}
+		<div class="pagination">
+		    <span class="step-links">
+			    {% if page_obj %}
+			        {% load math %}
+				    {% with next_total=page_obj.paginator.per_page|add:more_comments_per_push diff=page_obj.paginator.count|sub:page_obj.paginator.per_page %}
+				        {% if page_obj.paginator.per_page > start_total_comments %}
+				            <a class="btn btn-primary btn-sm" href="?total_comments={{ start_total_comments }}">Скрыть</a>
+					        {% if page_obj.has_next %}
+<!--						            <a class="btn btn-primary btn-sm" href="?total_comments={{ next_total|min:page_obj.paginator.count }}">Показать ещё {{ diff|min:more_comments_per_push }}</a>-->
+						        <a class="btn btn-primary btn-sm" href="?total_comments={{ page_obj.paginator.count }}">Показать все</a>
+				            {% endif %}
+					    {% else %}
+					        <a class="btn btn-primary btn-sm" href="?total_comments={{ next_total|min:page_obj.paginator.count }}">Показать комментарии</a>
+					    {% endif %}
+				    {% endwith %}
+			    {% else %}
+			        {% if car.comments.all %}
+			            <a class="btn btn-primary btn-sm" href="?total_comments={{ more_comments_per_push }}">Показать комментарии</a>
+			        {% endif %}
+			    {% endif %}
+		    </span>
+		</div>
+	</section>
+	<script>
+		const commentButton = document.getElementById("send-comment");
+		document.getElementById("comment-input").addEventListener("input", (e) => {
+			if (e.target.value) {
+				commentButton.disabled = false;
+			} else {
+				commentButton.disabled = true;
+			};
+		})
+	</script>
+{% endblock %}

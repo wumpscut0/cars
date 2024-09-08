@@ -1,0 +1,38 @@
+{% extends "carsapp/base.html" %}
+
+{% block title %}
+	Форма объявления
+{% endblock %}
+
+{% block js %}
+	{% load static %}
+	<script src="{% static 'js/cars.js' %}"></script>
+	<script src="{% static 'js/autocompletion.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+	<section class="container">
+		<div>
+			<form method="post" action="{% url 'carsapp:car_create' %}">
+				{% csrf_token %}
+				<p class="md-3">
+				    <label class="form-label" for="id_make">Make:</label>
+				    <input class="form-control" type="text" name="make" maxlength="100" required="" id="id_make" autocomplete="off" >
+                </p>
+				<p class="md-3">
+				    <label class="form-label" for="id_model">Model:</label>
+				    <input class="form-control" type="text" name="model" maxlength="100" required="" id="id_model" autocomplete="off">
+				</p>
+				<p class="md-3">
+				    <label class="form-label" for="id_year">Year:</label>
+				    <input class="form-control" type="number" name="year" value="2019" required="" id="id_year">
+				</p>
+				<p>
+					<label class="form-label" for="id_description">Description:</label>
+					<textarea class="form-control" name="description" cols="40" rows="10" maxlength="1023" id="id_description"></textarea>
+				</p>
+				<button class="btn btn-primary" type="submit">Создать</button>
+			</form>
+		</div>
+	</section>
+{% endblock %}
