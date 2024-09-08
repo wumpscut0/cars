@@ -25,6 +25,7 @@
 - Docker 27.0.3
 - git 2.45.2
 - bash 5.2.26
+2. Убедитесь что порт 8000 свободен
 2. Выполните команду:
 ```bash
 git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wumpscut0 && docker-compose up --build
@@ -35,12 +36,13 @@ git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wu
 - git 2.45.2
 - bash 5.2.26
 - poetry 1.8.3 или pip 24.2
-2. Выполните команду
+2. Убедитесь что порт 8000 свободен
+3. Выполните команду
    - вариант poetry:
     ```bash
     git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wumpscut0 && python poetry install -E other && poetry shell && python manage.py makemigrations && python manage.py migrate && python manage.py runserver
     ```
-   - вариант с pip:
+   - вариант pip:
     ```bash
     git clone https://github.com/wumpscut0/cars.git ./cars_wumpscut0 && cd ./cars_wumpscut0 && python python -m venv .venv_CfRhiWwupo && soruce .venv_CfRhiWwupo/bin/activate && pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py runserver
     ```
